@@ -6,7 +6,7 @@ for the retail "Pantry Plus" online grocery store. Three issues:
   - subscription (turns 15-28, resolved)
   - payment_update (turns 29-48, active)
 
-Required case facts must land at specific turns (see prd.json US-03).
+Required case facts must land at specific turns.
 
 Authoring uses Sonnet 4.6 (one-shot; the project itself defaults to Haiku 4.5
 for compression). Validated post-hoc against the placement contract.

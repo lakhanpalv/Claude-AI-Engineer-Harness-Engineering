@@ -6,7 +6,7 @@
 
 The tool schemas you write **are the agent's API**. The set of tools you expose is the set of actions the model can take. When the model has to choose between "ask a clarifying question" and "commit to a classification," it is choosing between two tool schemas you registered.
 
-This has a sharp consequence: decision logic does not belong in Python. The moment your harness contains `if "water" in transcript: claim_type = "property_damage"`, you have moved the decision out of the model. That looks helpful but it is the anti-pattern that defines Module 1. If the model is making the decision, the harness has nothing to branch on — the model's tool choice carries it.
+This has a sharp consequence: decision logic does not belong in Python. The moment your harness contains `if "water" in transcript: claim_type = "property_damage"`, you have moved the decision out of the model. That looks helpful but it is the anti-pattern that defines this module. If the model is making the decision, the harness has nothing to branch on — the model's tool choice carries it.
 
 The four named anti-patterns in this module are how decision logic sneaks back into Python:
 
@@ -43,7 +43,7 @@ Plus the **Graceful Tool Failure** helpers `_err` and `_ok`, the matching dispat
 - Each dispatcher validates inputs and returns `_err(...)` on bad input rather than crashing.
 - The four AST tests pass against `loop.py`.
 
-### How This Exercises the Tool Kit and Anti-Pattern LO
+### How This Exercises the Tool Kit and Anti-Pattern
 
 The tools are the surface area through which the model can act. Writing the schemas forces you to name those actions precisely. The AST audit then closes the loop: even if someone refactors `loop.py` later and is tempted to add `if "..." in response_text:`, the audit will catch it.
 

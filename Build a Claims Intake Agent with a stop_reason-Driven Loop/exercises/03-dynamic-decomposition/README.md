@@ -38,7 +38,7 @@ processes 8 fixture claims end-to-end. Six route to one of the four queues. One 
 - The fixture runner wires `fixture["clarification_responses"]` into the session so `request_clarification` can match.
 - All 8 fixtures terminate cleanly. `claim_03` routes after a clarification. `claim_06` escalates. `claim_05` routes without clarification.
 
-### How This Exercises the Dynamic Decomposition LO
+### How This Exercises the Dynamic Decomposition
 
 When you open `runs/<ts>/traces/claim_03_water_damage.jsonl` and see a `request_clarification` turn between the fact-gathering and the `classify_claim` call, you are looking at dynamic decomposition. The clarification was not in any plan. The model emitted it because it inspected its own partial state and noticed the ambiguity. Same loop. Same tool kit. Different observed behavior — driven by the facts in flight.
 
@@ -78,4 +78,4 @@ pytest tests/ -v
 
 ---
 
-After this exercise, you have the working reference project. The loop, the tool kit, and the dynamic decomposition behavior are all in place. This is the pattern every later module of the course extends.
+After this exercise, you have the working reference project. The loop, the tool kit, and the dynamic decomposition behavior are all in place. This is the pattern that later work extends.

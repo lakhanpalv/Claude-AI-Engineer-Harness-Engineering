@@ -1,4 +1,4 @@
-"""Anti-pattern audit for Module 1 (US-07).
+"""Anti-pattern audit.
 
 Verifies, by static AST analysis, that the agentic loop does NOT:
 - use string-membership tests against text content to drive control flow
@@ -23,7 +23,7 @@ def _parse(path: Path) -> ast.Module:
 
 
 # ---------------------------------------------------------------------------
-# AC-07.2 — no string-membership tests against assistant text drive control flow
+# No string-membership tests against assistant text drive control flow
 # ---------------------------------------------------------------------------
 def test_no_string_membership_against_text_in_loop() -> None:
     """No `"some_token" in <something>` expressions in loop.py.
@@ -46,7 +46,7 @@ def test_no_string_membership_against_text_in_loop() -> None:
 
 
 # ---------------------------------------------------------------------------
-# AC-07.3 — no integer-literal iteration cap as the primary stopping mechanism
+# No integer-literal iteration cap as the primary stopping mechanism
 # ---------------------------------------------------------------------------
 def test_no_integer_literal_iteration_cap_in_loop() -> None:
     """No `for _ in range(<int literal>)` and no `while <var> < <int literal>` in loop.py.
@@ -83,7 +83,7 @@ def test_no_integer_literal_iteration_cap_in_loop() -> None:
 
 
 # ---------------------------------------------------------------------------
-# AC-07.4 — stop_reason is referenced in loop.py and breaks the while loop
+# stop_reason is referenced in loop.py and breaks the while loop
 # ---------------------------------------------------------------------------
 def test_stop_reason_is_loop_control() -> None:
     tree = _parse(LOOP_PY)
@@ -114,7 +114,7 @@ def test_stop_reason_is_loop_control() -> None:
 
 
 # ---------------------------------------------------------------------------
-# AC-07.5 — no `if claim_type == "..."` branching outside tools.py / pricing.py
+# No `if claim_type == "..."` branching outside tools.py / pricing.py
 # ---------------------------------------------------------------------------
 def test_no_claim_type_equality_branching_in_package() -> None:
     """Decision logic about claim type lives in the model, not in Python.

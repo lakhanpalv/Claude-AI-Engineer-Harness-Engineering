@@ -7,11 +7,11 @@ Usage:
     python -m retail_context.run --eval --model claude-sonnet-4-6
 
 Outputs (under runs/<run_id>/):
-    context.md                — the assembled context (US-06)
-    budget.json               — token accounting (US-02, US-06)
-    case_facts_call.json      — LLM call log for case-facts extraction (US-03)
-    eval.jsonl                — eval-question results (US-07)
-    eval_control.jsonl        — control eval with case-facts stripped (US-07)
+    context.md                — the assembled context
+    budget.json               — token accounting
+    case_facts_call.json      — LLM call log for case-facts extraction
+    eval.jsonl                — eval-question results
+    eval_control.jsonl        — control eval with case-facts stripped
 """
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-"""US-02 — transcript loader and baseline token accounting."""
+"""Transcript loader and baseline token accounting."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -34,7 +34,7 @@ def test_transcript_loader_partition_boundaries(t):
 
 
 def test_transcript_loader_token_count_in_engineered_range(t):
-    # AC-02.3 — baseline must lie in [42000, 52000]
+    # baseline must lie in [42000, 52000]
     assert 42000 <= t.token_count <= 52000, (
         f"baseline token_count {t.token_count} outside engineered range [42000, 52000]"
     )

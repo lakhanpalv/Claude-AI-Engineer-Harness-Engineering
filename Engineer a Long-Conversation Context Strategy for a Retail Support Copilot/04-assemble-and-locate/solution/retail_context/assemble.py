@@ -1,4 +1,4 @@
-"""Position-aware context assembly (US-06).
+"""Position-aware context assembly.
 
 Layout (top → bottom):
   # Case Facts                       — top boundary, structured (≤ 600 tokens)
@@ -9,7 +9,7 @@ Layout (top → bottom):
 This places key findings at both context boundaries (Case Facts at top, the
 active turn-by-turn at bottom against the new user turn) and lets the resolved
 narrative occupy the lower-attention middle. Sections are exclusive — no
-interleaving (AC-06.5).
+interleaving.
 """
 from __future__ import annotations
 
@@ -19,8 +19,8 @@ from retail_context.case_facts import CaseFacts
 from retail_context.compressor import Compressed
 from retail_context.tokens import count
 
-# Display titles for the resolved sections. Exact strings are part of the contract
-# (AC-06.1 / AC-08.3); the assemble-order audit regex matches against these.
+# Display titles for the resolved sections. Exact strings are part of the
+# contract; the assemble-order audit regex matches against these.
 RESOLVED_TITLES: dict[str, str] = {
     "refund": "# Resolved: Refund inquiry",
     "subscription": "# Resolved: Subscription cancellation",
@@ -36,7 +36,7 @@ class AssembledContext:
     case_facts_block: str
     resolved_blocks: dict[str, str]
     active_block: str
-    active_raw_text: str  # byte-exact verbatim source for AC-06.3 / AC-08.4
+    active_raw_text: str  # byte-exact verbatim source for the active segment
 
     def section_tokens(self) -> dict[str, int]:
         sections = {"case_facts": count(self.case_facts_block)}

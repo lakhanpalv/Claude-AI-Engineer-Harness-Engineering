@@ -1,13 +1,13 @@
-"""Deterministic tool-output pruning for the verbose `lookup_order` response (US-04).
+"""Deterministic tool-output pruning for the verbose `lookup_order` response.
 
-The Architect's Playbook "Tool Context Pruning" pattern: application-side filtering
+The "Tool Context Pruning" pattern: application-side filtering
 of a verbose tool result so only the fields needed for the immediate decision survive
 into context. For return/refund reasoning, exactly five fields matter — order identity,
 when it was placed, what it cost, whether it shipped, and the return-window deadline.
 
 # TODO (Exercise 1): Replace the placeholder docstring section below with a
-# justification of each of the 5 kept fields. The justifications are graded
-# (AC-04.6): a reviewer reads them and must agree they map to the return/refund
+# justification of each of the 5 kept fields. The justifications are reviewed:
+# a reviewer reads them and must agree they map to the return/refund
 # decision, not to "looks important" or "might be useful later". One short
 # sentence per field is enough.
 #
@@ -19,7 +19,7 @@ when it was placed, what it cost, whether it shipped, and the return-window dead
 #   - <field>: <why>
 
 Implementation: deterministic field selection (no LLM call). The pruner has no
-`anthropic` import — enforced by AC-08.2's AST audit.
+`anthropic` import — enforced by an AST audit.
 """
 from __future__ import annotations
 
@@ -51,5 +51,5 @@ def prune_lookup_order(raw: dict) -> dict:
     #    tests/test_pruner.py asserts on it.)
     #
     # Do NOT add an `anthropic` import here — the pruner is deterministic by
-    # design (AC-08.2). The AST audit will flag any LLM-driven implementation.
+    # design. The AST audit will flag any LLM-driven implementation.
     raise NotImplementedError("Exercise 1: implement deterministic 5-field pruning")

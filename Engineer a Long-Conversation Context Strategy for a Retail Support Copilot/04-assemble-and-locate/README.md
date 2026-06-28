@@ -1,6 +1,6 @@
 # Exercise 4: Assemble the Engineered Context and Locate It on the Anatomy
 
-**Arc LO D (LO 4 + LO 7 + LO 1 merged).** *Assemble the engineered context with case facts at the top boundary, resolved summaries in the middle, and the active segment verbatim at the bottom boundary, using explicit section headers — and locate this work on the context-window anatomy diagram (Layer 2).*
+*Assemble the engineered context with case facts at the top boundary, resolved summaries in the middle, and the active segment verbatim at the bottom boundary, using explicit section headers — and locate this work on the context-window anatomy diagram (Layer 2).*
 
 This is the capstone. When you finish, `python -m retail_context.run --all` produces the full set of artifacts (`context.md`, `budget.json`, `case_facts_call.json`, `eval.jsonl`, `eval_control.jsonl`) and the README carries the writeup that ties the layout to the lost-in-the-middle effect and to Layer 2 of the context-window anatomy.
 
@@ -10,7 +10,7 @@ This is the capstone. When you finish, `python -m retail_context.run --all` prod
 
 `starter/` is byte-identical to Exercise 3's `solution/` — your pruner, case-facts extractor, canonical token counter, compressor, and budget block are all in place. New for Exercise 4:
 
-- `retail_context/assemble.py` is now the active learner-write surface (two TODO blocks: the header-contract dicts and the `build()` body).
+- `retail_context/assemble.py` is now the active file you implement (two TODO blocks: the header-contract dicts and the `build()` body).
 - `README.md` has three writeup sections stubbed (`<!-- TODO (Exercise 4): ... -->`): the context-window anatomy diagram, "Why this layout?", and the before/after token budget table.
 - The full test suite is now in scope — `tests/test_assemble.py` becomes the verify target for the assembler, and `python -m retail_context.run --all` will run end-to-end for the first time.
 
@@ -26,9 +26,9 @@ This is the capstone. When you finish, `python -m retail_context.run --all` prod
      - Construct and return an `AssembledContext` with `markdown`, `case_facts_block`, `resolved_blocks`, `active_block`, and `active_raw_text=compressed.active_text` (the AST audit uses `active_raw_text` to verify the assembled active body equals the raw turns).
 
 2. **`README.md`** — replace the three `<!-- TODO (Exercise 4): ... -->` blocks:
-   - **Context-window anatomy (LO 1).** A five-layer diagram (system prompt → CLAUDE.md → memory → conversation history → current turn) plus one paragraph naming which layer *this project* operates on. ASCII or Mermaid — what matters is that a reviewer can read a labeled box and find the corresponding section of `runs/<id>/context.md`.
+   - **Context-window anatomy.** A five-layer diagram (system prompt → CLAUDE.md → memory → conversation history → current turn) plus one paragraph naming which layer *this project* operates on. ASCII or Mermaid — what matters is that a reviewer can read a labeled box and find the corresponding section of `runs/<id>/context.md`.
    - **Why this layout?** 3–5 sentences citing the "lost in the middle" attention effect, the resolved-vs-active fidelity tradeoff, and the pass-complete-history baseline this project deliberately deviates from (only for resolved threads).
-   - **Before / after token budget (LO 3).** One line naming the methodology (sourced from `tokens.methodology()` and recorded in `budget.json`), followed by a Markdown table populated from `runs/<id>/budget.json` — per-section + assembled total + baseline + reduction percentage.
+   - **Before / after token budget.** One line naming the methodology (sourced from `tokens.methodology()` and recorded in `budget.json`), followed by a Markdown table populated from `runs/<id>/budget.json` — per-section + assembled total + baseline + reduction percentage.
 
 ## Verify
 
@@ -49,8 +49,8 @@ If you re-run `pytest tests/` after the `--all` run, the previously-skipped `tes
 ## Where to look if you get stuck
 
 - **The header contract is part of the API the model sees.** Using `## Section` instead of `# Section` would still parse as Markdown but would change what the model picks up as a section boundary. The audit's exact-text match is the defense.
-- **Why is the order refund → subscription → active and not something else?** The position contract: top boundary holds the densest structured content (case facts), middle holds the compressible-with-acceptable-fidelity-loss zone (resolved summaries, ordered by when each issue was opened in the transcript), bottom boundary holds the still-being-negotiated content where every turn matters (active verbatim, against the new user turn). Changing this order is a different LO than the one this exercise grades.
-- **The README writeup is what makes LO 1 measurable.** The diagram alone doesn't demonstrate the LO; what does is the *map* from a labeled layer in the diagram to a corresponding section of the `context.md` you just produced. Write it so a reviewer can point at a box and find the bytes.
+- **Why is the order refund → subscription → active and not something else?** The position contract: top boundary holds the densest structured content (case facts), middle holds the compressible-with-acceptable-fidelity-loss zone (resolved summaries, ordered by when each issue was opened in the transcript), bottom boundary holds the still-being-negotiated content where every turn matters (active verbatim, against the new user turn). Changing this order is a different concern than the one this exercise focuses on.
+- **The README writeup is what makes the anatomy mapping measurable.** The diagram alone doesn't demonstrate the mapping; what does is the *map* from a labeled layer in the diagram to a corresponding section of the `context.md` you just produced. Write it so a reviewer can point at a box and find the bytes.
 
 ## When you're done
 

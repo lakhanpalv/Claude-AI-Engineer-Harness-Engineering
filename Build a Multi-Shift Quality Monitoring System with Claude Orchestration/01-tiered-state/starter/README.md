@@ -7,7 +7,7 @@ You're building the data layer of a Layer 3 Claude orchestration system that run
 - `shift_monitor/state.py` — `HotState` Pydantic model + `write_atomic`. Fill in the `TODO:` blocks.
 - `shift_monitor/warm.py` — `WarmStore` SQLite wrapper + `defects_since` indexed query. Fill in the `TODO:` blocks.
 - `shift_monitor/cold.py` — `ColdStore.write_monthly_summary`. Fill in the `TODO:` block.
-- `tests/test_us01_tiered_state.py` — the 9 tests that pin down the acceptance criteria.
+- `tests/test_us01_tiered_state.py` — the 9 tests for this exercise.
 - `fixtures/defects.json` — 40 sub-agent-generated defect rows used by the tests.
 
 ## Install

@@ -1,4 +1,4 @@
-"""US-06 — position-aware assembly."""
+"""Position-aware assembly."""
 from __future__ import annotations
 
 from retail_context.assemble import build
@@ -45,7 +45,7 @@ def _fake_compressed() -> Compressed:
 
 
 def test_assemble_section_order_exact():
-    """AC-06.1 — exact section header sequence."""
+    """Exact section header sequence."""
     assembled = build(_fake_facts(), _fake_compressed())
     md = assembled.markdown
 
@@ -58,7 +58,7 @@ def test_assemble_section_order_exact():
 
 
 def test_active_segment_byte_exact():
-    """AC-06.3 — active section body is byte-exact equal to active_text."""
+    """Active section body is byte-exact equal to active_text."""
     compressed = _fake_compressed()
     assembled = build(_fake_facts(), compressed)
     # The active_text must appear verbatim in the markdown.
@@ -69,7 +69,7 @@ def test_active_segment_byte_exact():
 
 
 def test_no_interleaving_of_resolved_and_active():
-    """AC-06.5 — section boundaries are exclusive."""
+    """Section boundaries are exclusive."""
     assembled = build(_fake_facts(), _fake_compressed())
     md = assembled.markdown
     active_idx = md.index("# Active issue:")

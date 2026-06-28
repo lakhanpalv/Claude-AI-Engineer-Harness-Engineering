@@ -1,13 +1,13 @@
-"""Case-facts extraction into a persistent block at the top of context (US-03).
+"""Case-facts extraction into a persistent block at the top of context.
 
 Extraction is LLM-driven: one Claude call against the full transcript that returns
-strict JSON for the 12 required fields. The Playbook calls this a *scratchpad* — same
+strict JSON for the 12 required fields. This is commonly called a *scratchpad* — same
 concept, different word: a dense structured block that survives compression and is
 placed at the top boundary of context so the model can recover transactional facts
 without scanning thousands of tokens of narrative.
 
 Missing-field behavior raises `CaseFactExtractionError` listing the gaps — silent
-null-fill is forbidden (AC-03.6).
+null-fill is forbidden.
 """
 from __future__ import annotations
 

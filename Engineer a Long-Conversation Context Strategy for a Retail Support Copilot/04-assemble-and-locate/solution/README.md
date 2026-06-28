@@ -1,17 +1,17 @@
-# Retail Customer Support Context Strategy — Module 2 Solution
+# Retail Customer Support Context Strategy
 
 **Course:** Claude Certified Architect — Foundations / Course 1, Harness Engineering
 **Module:** 2 — Context Engineering Foundations
 **Status:** Solution exemplar
 **Build:** Python 3.11+, `anthropic` SDK, runs in Docker with `$ANTHROPIC_API_KEY`
 
-This is the reference solution for Module 2's industry project. The system designs a context-management strategy for a 48-turn retail customer-support conversation that spans three issues — a refund inquiry (resolved), a subscription cancellation (resolved), and a payment-method update (active). The raw transcript is ~35,000 tokens; the assembled context is **the project's measurable output**, recorded in `runs/<run_id>/context.md` alongside `budget.json` (token accounting) and `eval.jsonl` (evaluation results against the compressed context).
+This is the reference solution. The system designs a context-management strategy for a 48-turn retail customer-support conversation that spans three issues — a refund inquiry (resolved), a subscription cancellation (resolved), and a payment-method update (active). The raw transcript is ~35,000 tokens; the assembled context is **the project's measurable output**, recorded in `runs/<run_id>/context.md` alongside `budget.json` (token accounting) and `eval.jsonl` (evaluation results against the compressed context).
 
-The defining architectural choice is **application-side context engineering**: the harness owns the assembly, compression, and pruning decisions, not the model. This is the pattern Exam Task 5.1 emphasizes ("trim verbose tool outputs … *before they accumulate in context*"). The Module 2 cookbook labs demonstrate the *server-side* counterpart (`clear_tool_uses_20250919`, `compact_20260112`) — see "What I'd do next" below for the contrast.
+The defining architectural choice is **application-side context engineering**: the harness owns the assembly, compression, and pruning decisions, not the model. This is the pattern to apply for context engineering ("trim verbose tool outputs … *before they accumulate in context*"). The cookbook labs demonstrate the *server-side* counterpart (`clear_tool_uses_20250919`, `compact_20260112`) — see "What I'd do next" below for the contrast.
 
 ---
 
-## Context-window anatomy (LO 1)
+## Context-window anatomy
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -28,7 +28,7 @@ The defining architectural choice is **application-side context engineering**: t
 └─────────────────────────────────────────────────────────┘
 ```
 
-This project operates on **Layer 2** — the conversation history layer. We do not write CLAUDE.md (Module 8) or memory files (Module 9). The strategy below decides what survives compression and where it sits inside the history block when it does.
+This project operates on **Layer 2** — the conversation history layer. We do not write CLAUDE.md or memory files. The strategy below decides what survives compression and where it sits inside the history block when it does.
 
 ## Why this layout?
 
@@ -47,11 +47,11 @@ Three considerations drive this layout:
 
 2. **Resolved-vs-active fidelity tradeoff** — for resolved issues, the facts that matter have stabilized (amounts, IDs, statuses, dates) and can be condensed without information loss. For the *active* issue, every turn-by-turn nuance is potentially decision-load-bearing because the resolution is still being worked out. We summarize the first, preserve the second byte-exact.
 
-3. **The pass-complete-history baseline** — Exam Task 5.1 names "the importance of passing complete conversation history in subsequent API requests to maintain conversational coherence." This project deliberately deviates from that default *only* for resolved threads, where conversational coherence is no longer load-bearing. The active thread is preserved verbatim, so coherence on the live issue is uncompromised. The case-facts block exists precisely so that the resolved-thread compression cannot accidentally drop a fact the agent needs later — it's the **scratchpad** that survives compression (the Architect's Playbook uses "scratchpad" for what this project calls the case-facts block; same pattern, different name).
+3. **The pass-complete-history baseline** — the standard guidance names "the importance of passing complete conversation history in subsequent API requests to maintain conversational coherence." This project deliberately deviates from that default *only* for resolved threads, where conversational coherence is no longer load-bearing. The active thread is preserved verbatim, so coherence on the live issue is uncompromised. The case-facts block exists precisely so that the resolved-thread compression cannot accidentally drop a fact the agent needs later — it's the **scratchpad** that survives compression (the term "scratchpad" is sometimes used for what this project calls the case-facts block; same pattern, different name).
 
-## Before / after token budget (LO 3)
+## Before / after token budget
 
-Token-counting methodology: **Anthropic `messages.count_tokens` endpoint** (model-authoritative) when `ANTHROPIC_API_KEY` is set; a documented `len(text) / 3.8` heuristic falls back when running against the Claude Code CLI subscription. Either path flows through the single canonical `retail_context.tokens.count` function (AC-08.1).
+Token-counting methodology: **Anthropic `messages.count_tokens` endpoint** (model-authoritative) when `ANTHROPIC_API_KEY` is set; a documented `len(text) / 3.8` heuristic falls back when running against the Claude Code CLI subscription. Either path flows through the single canonical `retail_context.tokens.count` function.
 
 Numbers below are from `runs/20260519-124910/budget.json` (Haiku 4.5, heuristic counter):
 
@@ -70,7 +70,7 @@ Observations:
 - The case-facts block is **149 tokens** — small enough to sit at the top boundary without crowding out attention, dense enough to carry all 12 transactional fields.
 - The resolved-segment summaries averaged ~330 tokens each, compressing ~13,000 tokens of raw narrative per segment to <500 tokens — ~97.5% reduction on the resolved portion.
 
-## Eval results (US-07)
+## Eval results
 
 Six questions span all three issues. Pass threshold ≥ 5/6 against the assembled context. A control variant strips the case-facts block; at least one of Q1/Q6 must fail in the control, proving the block carries information the summaries don't.
 
@@ -121,7 +121,7 @@ Artifacts land in `runs/<run_id>/`:
 
 ## What I'd do next
 
-- **Session resumption** (Module 9 preview) — when the same customer returns 4 hours later, do we reload the verbatim active segment or re-extract case facts and start fresh? The case-facts block is the right *durable* artifact to carry across `--resume`; the verbatim active section becomes stale (tool results referenced by turn-id may have expired in the backend).
+- **Session resumption** — when the same customer returns 4 hours later, do we reload the verbatim active segment or re-extract case facts and start fresh? The case-facts block is the right *durable* artifact to carry across `--resume`; the verbatim active section becomes stale (tool results referenced by turn-id may have expired in the backend).
 
 - **Server-side context editing** is the modern API-level alternative this project deliberately does not use. The Anthropic Messages API exposes:
   - **`clear_tool_uses_20250919`** (beta `context-management-2025-06-27`) — drops stale tool-result blocks server-side, transparent to the model. Preferable to this project's `pruner.py` when the *whole tool result* can be dropped (vs preserving 5 of 40 fields).
@@ -144,19 +144,19 @@ module-02-retail-context-strategy/
 │   ├── __init__.py
 │   ├── __main__.py
 │   ├── client.py               # Anthropic SDK + Claude Code CLI fallback
-│   ├── tokens.py               # canonical token-count function (US-02)
-│   ├── transcript.py           # loader + segmentation (US-02)
-│   ├── case_facts.py           # extraction into persistent block (US-03)
-│   ├── pruner.py               # deterministic tool-output pruning (US-04)
-│   ├── compressor.py           # resolved-segment summarization (US-05)
-│   ├── assemble.py             # position-aware assembly (US-06)
-│   ├── evaluate.py             # eval-question runner (US-07)
+│   ├── tokens.py               # canonical token-count function
+│   ├── transcript.py           # loader + segmentation
+│   ├── case_facts.py           # extraction into persistent block
+│   ├── pruner.py               # deterministic tool-output pruning
+│   ├── compressor.py           # resolved-segment summarization
+│   ├── assemble.py             # position-aware assembly
+│   ├── evaluate.py             # eval-question runner
 │   ├── run.py                  # CLI entry point
 │   └── prompts/
 │       └── compression_prompt.md
 ├── data/
 │   ├── transcript_48turns.json     # 48-turn fixture, 3 issues
-│   ├── lookup_order_response.json  # 57-field tool response (US-04 fixture)
+│   ├── lookup_order_response.json  # 57-field tool response fixture
 │   └── eval_questions.json
 ├── scripts/
 │   └── generate_transcript.py      # one-shot fixture authoring (Sonnet 4.6)
@@ -165,15 +165,11 @@ module-02-retail-context-strategy/
 │   ├── test_pruner.py
 │   ├── test_assemble.py
 │   └── test_antipatterns.py
-├── runs/
-│   └── <run_id>/
-│       ├── context.md
-│       ├── budget.json
-│       ├── case_facts_call.json
-│       ├── eval.jsonl
-│       └── eval_control.jsonl
-└── spec/
-    ├── PRD.md
-    ├── prd.json
-    └── learning_objectives.md
+└── runs/
+    └── <run_id>/
+        ├── context.md
+        ├── budget.json
+        ├── case_facts_call.json
+        ├── eval.jsonl
+        └── eval_control.jsonl
 ```

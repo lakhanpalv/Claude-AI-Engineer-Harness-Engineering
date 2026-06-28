@@ -19,7 +19,7 @@ class HotState(BaseModel):
     model_config = ConfigDict(frozen=True)
 
     # TODO: Declare the four required fields with the right types and constraints.
-    # The acceptance criteria expect exactly these names:
+    # The state schema uses exactly these names:
     #   recent_defect_hashes: list[str], capped at MAX_RECENT_HASHES items.
     #     NOTE: In Pydantic v2 the list-length constraint is `max_length`.
     #     Older blog posts use `max_items` — that key was renamed and is silently

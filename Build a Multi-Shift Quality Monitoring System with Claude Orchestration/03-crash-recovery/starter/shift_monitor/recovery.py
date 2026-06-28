@@ -26,7 +26,7 @@ def decide(state: ManifestState, now: datetime) -> Decision:
     # TODO: Return "resume" or "fresh" based on three cases.
     #
     #   1. If the manifest has no steps at all, return "fresh".
-    #      (An empty manifest is a special case learners often forget alongside
+    #      (An empty manifest is a special case that is easy to forget alongside
     #       the complete-vs-incomplete path.)
     #   2. If the manifest is complete (last step name == "complete"), return "fresh".
     #   3. Otherwise the manifest is incomplete. Compare `now` to the last step's

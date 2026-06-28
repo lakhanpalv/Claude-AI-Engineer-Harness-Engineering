@@ -1,4 +1,4 @@
-"""Eval-question runner (US-07).
+"""Eval-question runner.
 
 Issues one Claude call per question with the assembled context as the system prompt
 and the question as the user turn. A question passes when the expected fragment

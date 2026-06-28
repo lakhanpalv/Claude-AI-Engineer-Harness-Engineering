@@ -1,6 +1,6 @@
 """Layer 3 fork: copy hot state into an isolated working directory per hypothesis.
 
-This is the Module 9 framing of `fork_session`: the SDK / CLI primitive lives at
+`fork_session` here is the application-side framing: the SDK / CLI primitive lives at
 Layer 2; here we reproduce the *semantics* (shared baseline, isolated scratchpads,
 no cross-contamination) using state-file copies.
 """

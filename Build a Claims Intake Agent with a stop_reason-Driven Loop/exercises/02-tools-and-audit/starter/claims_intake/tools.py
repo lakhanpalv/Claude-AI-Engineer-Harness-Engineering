@@ -27,7 +27,7 @@ SEVERITIES = ["low", "medium", "high"]
 # Schemas — passed verbatim to the Anthropic Messages API as the `tools` arg.
 # ----------------------------------------------------------------------------
 
-# TODO (Exercise 2): Populate TOOL_SCHEMAS with the first four tool schemas. Each schema
+# TODO: Populate TOOL_SCHEMAS with the first four tool schemas. Each schema
 # is a dict with "name", "description", and "input_schema". Tool descriptions are read by
 # the model on every turn — write them as if you were teaching the model what each tool is
 # for and *when* to call it. Categorical fields ("claim_type", "severity") must use
@@ -42,8 +42,7 @@ SEVERITIES = ["low", "medium", "high"]
 #   - assess_severity(severity: enum SEVERITIES, rationale: str)
 #     Commits the model to a severity bucket.
 #
-# Exercise 3 will extend this list with request_clarification, route_to_adjuster, and
-# escalate_to_human.
+# Later tools (request_clarification, route_to_adjuster, escalate_to_human) extend this list.
 TOOL_SCHEMAS: list[dict[str, Any]] = []
 
 # ----------------------------------------------------------------------------
@@ -52,7 +51,7 @@ TOOL_SCHEMAS: list[dict[str, Any]] = []
 
 
 def _err(category: str, retryable: bool, message: str) -> str:
-    # TODO (Exercise 2): Return a JSON string with these keys (the Graceful Tool Failure shape):
+    # TODO: Return a JSON string with these keys (the Graceful Tool Failure shape):
     #   is_error: True
     #   error_category: category   ("transient" or "permanent")
     #   is_retryable: retryable
@@ -63,7 +62,7 @@ def _err(category: str, retryable: bool, message: str) -> str:
 
 
 def _ok(payload: dict[str, Any]) -> str:
-    # TODO (Exercise 2): Return json.dumps(payload). Tool results are always strings;
+    # TODO: Return json.dumps(payload). Tool results are always strings;
     # the model parses them on the next turn.
     return "{}"
 
@@ -74,35 +73,35 @@ def _ok(payload: dict[str, Any]) -> str:
 
 
 def _t_lookup_policy(session: ClaimSession, inp: dict[str, Any]) -> str:
-    # TODO (Exercise 2): Read inp["policy_id"]; if not a string, return a permanent error.
+    # TODO: Read inp["policy_id"]; if not a string, return a permanent error.
     # Look it up in session.policies; if missing, return a permanent error naming the id.
     # Otherwise return the policy dict via _ok(...).
     return _err("permanent", False, "TODO: _t_lookup_policy not implemented yet")
 
 
 def _t_record_claim_fact(session: ClaimSession, inp: dict[str, Any]) -> str:
-    # TODO (Exercise 2): Validate inp["field"] and inp["value"] are both strings; store
+    # TODO: Validate inp["field"] and inp["value"] are both strings; store
     # session.case_facts[field] = value; return _ok with {"recorded": True, "field": field,
     # "case_facts_count": len(session.case_facts)}.
     return _err("permanent", False, "TODO: _t_record_claim_fact not implemented yet")
 
 
 def _t_classify_claim(session: ClaimSession, inp: dict[str, Any]) -> str:
-    # TODO (Exercise 2): Validate claim_type (in CLAIM_TYPES), confidence (number in [0,1]),
+    # TODO: Validate claim_type (in CLAIM_TYPES), confidence (number in [0,1]),
     # rationale (string). Store session.classification = {claim_type, confidence, rationale}
     # and return _ok with the recorded values plus {"recorded": True}.
     return _err("permanent", False, "TODO: _t_classify_claim not implemented yet")
 
 
 def _t_assess_severity(session: ClaimSession, inp: dict[str, Any]) -> str:
-    # TODO (Exercise 2): Validate severity (in SEVERITIES) and rationale (string).
+    # TODO: Validate severity (in SEVERITIES) and rationale (string).
     # Store session.severity = {severity, rationale} and return _ok with the recorded
     # values plus {"recorded": True}.
     return _err("permanent", False, "TODO: _t_assess_severity not implemented yet")
 
 
 def _t_request_clarification(session: ClaimSession, inp: dict[str, Any]) -> str:
-    # TODO (Exercise 3): Implement the clarification dispatcher.
+    # TODO: Implement the clarification dispatcher.
     #   1. Validate inp["question"] is a string and inp["ambiguity_between"] is a list of
     #      at least 2 entries; otherwise return _err("permanent", False, ...).
     #   2. Record the asked clarification in session.clarifications_asked (so the runner
@@ -115,7 +114,7 @@ def _t_request_clarification(session: ClaimSession, inp: dict[str, Any]) -> str:
 
 
 def _t_route_to_adjuster(session: ClaimSession, inp: dict[str, Any]) -> str:
-    # TODO (Exercise 3): Implement the routing terminal tool.
+    # TODO: Implement the routing terminal tool.
     #   1. Guard against double-terminal: if session.terminal_called, return an error.
     #   2. Validate inp["queue"] is in CLAIM_TYPES and inp["claim_summary"] is a string.
     #   3. Require session.classification and session.severity to be set; otherwise error.
@@ -127,7 +126,7 @@ def _t_route_to_adjuster(session: ClaimSession, inp: dict[str, Any]) -> str:
 
 
 def _t_escalate_to_human(session: ClaimSession, inp: dict[str, Any]) -> str:
-    # TODO (Exercise 3): Implement the escalation terminal tool.
+    # TODO: Implement the escalation terminal tool.
     #   1. Guard against double-terminal: if session.terminal_called, return an error.
     #   2. Validate inp["reason"] is a string and inp["structured_summary"] is a dict
     #      containing all required keys: policy_id, root_cause, candidate_claim_types,

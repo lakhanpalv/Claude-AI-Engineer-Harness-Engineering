@@ -1,9 +1,8 @@
-"""Tiered compression: summarize resolved segments; preserve active verbatim (US-05).
+"""Tiered compression: summarize resolved segments; preserve active verbatim.
 
 Resolved segments are condensed by a single Claude call per segment using the
 prompt template at `retail_context/prompts/compression_prompt.md`. The active
-segment is **never** summarized — it is preserved byte-exact, which is what
-US-05 / AC-05.4 grades.
+segment is **never** summarized — it is preserved byte-exact.
 """
 from __future__ import annotations
 

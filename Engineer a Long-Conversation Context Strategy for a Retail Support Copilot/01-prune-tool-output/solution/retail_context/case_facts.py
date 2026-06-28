@@ -1,13 +1,13 @@
-"""Case-facts extraction into a persistent block at the top of context (US-03).
+"""Case-facts extraction into a persistent block at the top of context.
 
 Extraction is LLM-driven: one Claude call against the full transcript that returns
-strict JSON for the 12 required fields. The Playbook calls this a *scratchpad* — same
+strict JSON for the 12 required fields. This is commonly called a *scratchpad* — same
 concept, different word: a dense structured block that survives compression and is
 placed at the top boundary of context so the model can recover transactional facts
 without scanning thousands of tokens of narrative.
 
 Missing-field behavior raises `CaseFactExtractionError` listing the gaps — silent
-null-fill is forbidden (AC-03.6).
+null-fill is forbidden.
 """
 from __future__ import annotations
 
@@ -36,8 +36,8 @@ REQUIRED_FIELDS: tuple[str, ...] = ()
 # float for refund_amount_usd). Then implement to_markdown(self) -> str so the
 # block renders with a level-1 `# Case Facts` header and the three subgroups
 # (Customer / Refund (resolved) / Subscription (resolved) / Payment update
-# (active)) as bold inline labels. The rendering is part of the contract
-# (AC-03.4) — fixed key order, Markdown headers, reviewer-readable.
+# (active)) as bold inline labels. The rendering is part of the contract:
+# fixed key order, Markdown headers, reviewer-readable.
 @dataclass
 class CaseFacts:
     def to_markdown(self) -> str:
@@ -56,7 +56,7 @@ class CaseFactExtractionError(ValueError):
 # 12 REQUIRED_FIELDS as keys, with the right types (refund_amount_usd is a
 # number, last4 are zero-padded strings, status tokens preserved verbatim).
 # Missing fields are null — DO NOT invent. Output is JSON only — no prose,
-# no markdown, no code fences. The prompt is graded for its strict-schema
+# no markdown, no code fences. The prompt is reviewed for its strict-schema
 # intent; the reviewer reads it to decide whether following it would reliably
 # produce a parseable JSON with every required field.
 _SYSTEM_PROMPT = ""
@@ -93,7 +93,7 @@ def extract(
     # 5. Validate that every name in REQUIRED_FIELDS is present in the parsed
     #    dict and is not None and not the empty string. If anything is
     #    missing, raise CaseFactExtractionError(missing=..., raw=...) — DO
-    #    NOT silently fill with null (AC-03.6).
+    #    NOT silently fill with null.
     #
     # 6. Construct and return a CaseFacts. Cast types explicitly:
     #    str(...) for ID/status fields, float(...) for refund_amount_usd.

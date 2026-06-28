@@ -1,4 +1,4 @@
-"""Transcript loader, segmentation, and baseline token accounting (US-02)."""
+"""Transcript loader, segmentation, and baseline token accounting."""
 from __future__ import annotations
 
 import json

@@ -88,7 +88,7 @@ TODO: Write an Explore-subagent worked example. Requirements:
 
 <!--
 TODO: Write a combined-workflow worked example. This is the most subtle of the
-      four — students often see plan mode and direct execution as binary. The
+      four — developers often see plan mode and direct execution as binary. The
       combined workflow uses plan mode for the DISCOVERY part (where you don't
       yet know the call-site list) and direct execution for the MECHANICAL part
       (where the rename is keystrokes once the list is known).

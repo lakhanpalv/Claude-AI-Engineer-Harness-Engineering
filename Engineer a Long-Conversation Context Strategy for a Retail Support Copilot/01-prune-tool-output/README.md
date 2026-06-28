@@ -1,6 +1,6 @@
 # Exercise 1: Trim the Verbose `lookup_order` Response
 
-**Arc LO A (LO 6 from spec).** *Trim a verbose 57-field tool response down to exactly the 5 fields needed for return/refund reasoning using deterministic field selection (no LLM call), and justify each kept field in a docstring graded for the link to the decision the tool supports.*
+*Trim a verbose 57-field tool response down to exactly the 5 fields needed for return/refund reasoning using deterministic field selection (no LLM call), and justify each kept field in a docstring that links it to the decision the tool supports.*
 
 ---
 
@@ -43,7 +43,7 @@ All five tests must pass:
 
 ## Where to look if you get stuck
 
-- **The 5 fields are listed inline** in the TODO comment in the module docstring. The graded part is the *justification* — naming why each one matters for the return/refund decision.
+- **The 5 fields are listed inline** in the TODO comment in the module docstring. The important part is the *justification* — naming why each one matters for the return/refund decision.
 - **"Why these 5 specifically?"** Each one anchors a different question the agent has to answer: *who* placed the order (identity), *when* it was placed (return window starts here), *how much* it cost (caps the refund), *where it is now* (refund vs. cancel routing), and *until when* the customer is eligible (the deadline).
 - **`KEPT_FIELDS` is a `tuple`, not a `list`** because the output order is part of the contract — using an unordered container would let a future refactor silently reorder the dict.
 

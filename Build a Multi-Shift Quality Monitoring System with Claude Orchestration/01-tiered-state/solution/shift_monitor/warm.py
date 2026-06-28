@@ -76,7 +76,7 @@ class WarmStore:
         """Return defects with ts > since_ts, newest first, up to limit rows.
 
         This is SQL-side filtering only — no Python-side filtering of severity,
-        component, or time. See AC-02-01.
+        component, or time.
         """
         with self._connect() as conn:
             cur = conn.execute(

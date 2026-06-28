@@ -56,7 +56,7 @@ def _run_one(
         policy_id=fixture["policy_id"],
         run_dir=run_dir,
         policies=policies,
-        # TODO (Exercise 3): Wire the fixture's scripted clarification responses into the
+        # TODO:Wire the fixture's scripted clarification responses into the
         # session so request_clarification can return them. The fixture stores them under
         # the "clarification_responses" key (a dict of question-substring -> reply).
         clarification_responses={},

@@ -5,7 +5,7 @@ appears in prose. The harness is generic; the prompt teaches the model how
 to use the tools and when to escalate.
 """
 
-# TODO (Exercise 3): Write the system prompt that drives the agent. Cover, in this order:
+# TODO: Write the system prompt that drives the agent. Cover, in this order:
 #   1. Role — claims intake specialist for a property insurance carrier.
 #   2. The four claim types (property_damage, theft, liability, auto) with concrete examples
 #      that distinguish edge cases (e.g., water damage from your own plumbing is property_damage;

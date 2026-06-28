@@ -66,7 +66,7 @@ class WarmStore:
         """Return defects with ts > since_ts, newest first, up to limit rows.
 
         SQL-side filtering only — no Python-side filtering of severity,
-        component, or time. See AC-02-01.
+        component, or time.
         """
         # TODO: Run an indexed SELECT against the defects table with `WHERE ts > ?`
         # ORDER BY ts DESC LIMIT ?, parameterised. Do not pull the whole table

@@ -1,4 +1,4 @@
-"""US-03 — Crash recovery via incremental manifest. Covers AC-03-01 .. AC-03-04."""
+"""Tests for crash recovery via the incremental manifest."""
 
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ def _make_step(name: str, when: datetime, shape: str = "rich") -> Step:
     )
 
 
-# ---------- AC-03-01 ----------------------------------------------------------
+# ---------- atomic, line-complete manifest appends ----------
 
 
 def test_append_step_writes_and_fsyncs(tmp_path: Path) -> None:
@@ -40,7 +40,7 @@ def test_append_step_writes_and_fsyncs(tmp_path: Path) -> None:
 
 
 def test_mid_write_read_reveals_prior_complete_lines(tmp_path: Path) -> None:
-    """AC-03-01 — a reader opening the file between append calls sees only complete lines."""
+    """A reader opening the file between append calls sees only complete lines."""
     manifest_path = tmp_path / "manifest_S2.jsonl"
     manifest = Manifest(manifest_path)
     now = datetime.now(UTC)
@@ -54,7 +54,7 @@ def test_mid_write_read_reveals_prior_complete_lines(tmp_path: Path) -> None:
     assert len(final) == 2
 
 
-# ---------- AC-03-02 ----------------------------------------------------------
+# ---------- loading manifest state ----------
 
 
 def test_load_returns_incomplete_state(tmp_path: Path) -> None:
@@ -83,7 +83,7 @@ def test_load_on_missing_file_returns_empty(tmp_path: Path) -> None:
     assert state.steps == []
 
 
-# ---------- AC-03-03 ----------------------------------------------------------
+# ---------- resume-vs-fresh decision ----------
 
 
 @pytest.mark.parametrize(
@@ -121,7 +121,7 @@ def test_threshold_constant_is_30_minutes() -> None:
     assert STALE_RESUME_THRESHOLD_MINUTES == 30
 
 
-# ---------- AC-03-04 ----------------------------------------------------------
+# ---------- resumed prompt construction ----------
 
 
 def test_resumed_prompt_has_both_sections(

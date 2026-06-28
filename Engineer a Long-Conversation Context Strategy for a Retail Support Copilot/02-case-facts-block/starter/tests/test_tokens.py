@@ -1,4 +1,4 @@
-"""Shape and consistency tests for the canonical token counter (US-02 / LO 3).
+"""Shape and consistency tests for the canonical token counter.
 
 These are unit-level checks that pass with or without ANTHROPIC_API_KEY set —
 the SDK path is exercised under the live `--build` run, not here.

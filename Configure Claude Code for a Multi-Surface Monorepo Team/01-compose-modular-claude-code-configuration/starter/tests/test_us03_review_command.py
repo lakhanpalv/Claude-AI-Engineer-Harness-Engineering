@@ -1,4 +1,4 @@
-"""US-03 — Project-scoped /review slash command."""
+"""Tests for the project-scoped /review slash command."""
 
 from pathlib import Path
 

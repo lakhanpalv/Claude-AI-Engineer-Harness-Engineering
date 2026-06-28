@@ -30,9 +30,9 @@ You will write the **body** of each iteration: build the trace record, call `tra
 - All `tool_use` blocks in a single assistant turn are executed and returned in **one** following user turn whose `content` is a list of `tool_result` blocks (each with the matching `tool_use_id`). Not one user turn per tool.
 - The trace records one JSON object per turn with these keys: `turn`, `stop_reason`, `tool_calls`, `latency_ms`, `input_tokens`, `output_tokens`.
 
-### How This Exercises the Loop LO
+### How This Exercises the Loop
 
-The loop you write here is the artifact every later module of the course extends — context engineering, evals, bounded autonomy, multi-agent orchestration. Getting the `stop_reason`-driven control flow right now is what makes those later modules tractable.
+The loop you write here is the artifact every later stage extends — context engineering, evals, bounded autonomy, multi-agent orchestration. Getting the `stop_reason`-driven control flow right now is what makes those later stages tractable.
 
 ### Resources
 

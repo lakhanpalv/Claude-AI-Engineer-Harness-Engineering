@@ -1,4 +1,4 @@
-"""US-04 — /deploy-check skill with context: fork and read-only allowed-tools."""
+"""Tests for the /deploy-check skill with context: fork and read-only allowed-tools."""
 
 from pathlib import Path
 

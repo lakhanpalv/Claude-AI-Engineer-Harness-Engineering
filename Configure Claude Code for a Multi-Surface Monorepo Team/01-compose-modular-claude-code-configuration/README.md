@@ -15,7 +15,7 @@ The `starter/` directory contains:
 - The full Python validator package (`ecommerce_team_config/`), test suite (`tests/`), and React/Node/Postgres scaffold under `src/`. You consume the validator as a black-box checker — you do not modify it.
 - The four `.claude/standards/*.md` files (`frontend.md`, `api.md`, `database.md`, `testing.md`) already complete. These are the always-loaded shared standards your `@import` block will pull in.
 - `.claude/rules/react.md` already complete, as a worked example of the path-scoped rule pattern (YAML frontmatter with `paths:` globs + body conventions).
-- A starter `CLAUDE.md` and stub `.claude/rules/api.md` + `.claude/rules/tests.md` with `# TODO:` comments marking each learner-write location.
+- A starter `CLAUDE.md` and stub `.claude/rules/api.md` + `.claude/rules/tests.md` with `# TODO:` comments marking each location you implement.
 
 ## How to run
 

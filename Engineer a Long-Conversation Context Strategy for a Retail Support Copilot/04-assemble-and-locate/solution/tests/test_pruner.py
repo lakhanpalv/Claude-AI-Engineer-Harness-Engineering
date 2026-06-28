@@ -1,4 +1,4 @@
-"""US-04 — tool-output pruner."""
+"""Tool-output pruner."""
 from __future__ import annotations
 
 import json
@@ -18,12 +18,10 @@ def raw():
 
 
 def test_lookup_order_fixture_has_at_least_40_fields(raw):
-    # AC-04.2
     assert len(raw) >= 40
 
 
 def test_pruner_keeps_exactly_the_contracted_set(raw):
-    # AC-04.1
     pruned = prune_lookup_order(raw)
     assert tuple(pruned.keys()) == KEPT_FIELDS
     assert set(pruned.keys()) == {
@@ -36,14 +34,12 @@ def test_pruner_keeps_exactly_the_contracted_set(raw):
 
 
 def test_pruned_output_under_200_tokens(raw):
-    # AC-04.4
     pruned = prune_lookup_order(raw)
     serialized = json.dumps(pruned)
     assert count(serialized) <= 200
 
 
 def test_pruner_raises_on_missing_required_field(raw):
-    # AC-04.5 (negative half)
     broken = {k: v for k, v in raw.items() if k != "return_eligible_until"}
     with pytest.raises(PrunerMissingFieldError):
         prune_lookup_order(broken)

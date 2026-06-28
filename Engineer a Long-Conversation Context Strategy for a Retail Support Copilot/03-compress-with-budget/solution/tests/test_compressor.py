@@ -1,4 +1,4 @@
-"""Shape and guard tests for the resolved-segment compressor (US-05 / LO 2).
+"""Shape and guard tests for the resolved-segment compressor.
 
 The `summarize_segment` LLM call itself is exercised under the live `--build`
 run; here we check the dataclass shapes, the resolved-only guard (which raises
@@ -41,7 +41,7 @@ def test_summarize_segment_refuses_to_compress_the_active_segment():
 
 def test_compression_prompt_is_committed_and_nontrivial():
     body = _load_prompt()
-    # The prompt template is graded for intent (AC-05.3). It must be present
+    # The prompt template is reviewed for intent. It must be present
     # and substantive; an empty file would fail the audit.
     assert len(body) > 100
     # The 3-part structure must be implied somewhere in the prompt — at

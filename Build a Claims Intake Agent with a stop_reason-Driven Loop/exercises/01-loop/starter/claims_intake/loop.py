@@ -1,6 +1,6 @@
 """The agentic loop.
 
-The defining contract for Module 1:
+The defining contract:
 - Control flow is driven by `response.stop_reason`.
 - Loop continues iff stop_reason == "tool_use".
 - Loop returns iff stop_reason == "end_turn".
@@ -84,7 +84,7 @@ def run(
         total_output += output_tokens
         budget.record_input_tokens(input_tokens)
 
-        # TODO (Exercise 1): Build a trace record for this turn and write it.
+        # TODO:Build a trace record for this turn and write it.
         # The record is a dict with these keys:
         #     turn:           the turn counter
         #     stop_reason:    response.stop_reason
@@ -95,7 +95,7 @@ def run(
         #     output_tokens:  output_tokens
         # Call `tracer.write(record)`.
 
-        # TODO (Exercise 1): Triage on response.stop_reason. The whole point of the
+        # TODO:Triage on response.stop_reason. The whole point of the
         # agentic loop is that THIS is what drives control flow — not the message text,
         # not a turn count, not the presence of a magic string.
         #

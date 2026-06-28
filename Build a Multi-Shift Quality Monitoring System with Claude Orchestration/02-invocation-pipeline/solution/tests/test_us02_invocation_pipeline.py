@@ -1,4 +1,4 @@
-"""US-02 — Push-work-down invocation pipeline. Covers AC-02-01 .. AC-02-04."""
+"""Tests for the push-work-down invocation pipeline."""
 
 from __future__ import annotations
 
@@ -40,7 +40,7 @@ def hot_state() -> HotState:
     )
 
 
-# ---------- AC-02-01 ----------------------------------------------------------
+# ---------- SQL-side gather (no Python filtering) ----------
 
 
 def test_gather_new_defects_is_pure_passthrough_to_sql(seeded_warm: WarmStore) -> None:
@@ -51,7 +51,7 @@ def test_gather_new_defects_is_pure_passthrough_to_sql(seeded_warm: WarmStore) -
 
 
 def test_gather_new_defects_has_no_python_side_filtering() -> None:
-    """AC-02-01 — AST inspection: no comprehensions, filters, ifs over rows."""
+    """AST inspection: no comprehensions, filters, ifs over rows."""
     source = inspect.getsource(pipeline.gather_new_defects)
     forbidden = ["if ", "for ", "filter(", "[r for", "[d for"]
     body = source.split("def gather_new_defects")[1]
@@ -61,7 +61,7 @@ def test_gather_new_defects_has_no_python_side_filtering() -> None:
         )
 
 
-# ---------- AC-02-02 ----------------------------------------------------------
+# ---------- distinct invocation shapes ----------
 
 
 def test_invocation_shapes_are_distinct(
@@ -91,7 +91,7 @@ def test_invocation_shapes_are_distinct(
     assert "Prior partial findings" in re.prompt
 
 
-# ---------- AC-02-03 ----------------------------------------------------------
+# ---------- rich prompt size budget ----------
 
 
 def test_build_rich_prompt_stays_under_4000_chars(
@@ -109,7 +109,7 @@ def test_build_rich_prompt_stays_under_4000_chars(
         assert d["id"] in prompt
 
 
-# ---------- AC-02-04 ----------------------------------------------------------
+# ---------- run-shift orchestration and CLI ----------
 
 
 def test_run_shift_invokes_client_exactly_once_and_writes_state(
@@ -151,7 +151,7 @@ def test_run_shift_cli_entry_point_works(
     recorded_shift_c_response: dict[str, Any],
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """AC-02-04 — `python -m shift_monitor run-shift --shift <ID>` invokable."""
+    """`python -m shift_monitor run-shift --shift <ID>` is invokable."""
     hot_path = tmp_path / "hot_state.json"
     hot_state.write_atomic(hot_path)
     scratchpad_path = tmp_path / "shift_scratchpad.jsonl"

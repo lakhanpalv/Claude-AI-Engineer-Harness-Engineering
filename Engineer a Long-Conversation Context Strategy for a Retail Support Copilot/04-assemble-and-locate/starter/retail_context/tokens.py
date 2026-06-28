@@ -9,8 +9,8 @@ Methodology — two paths, identical interface:
    no API key is available (e.g., local development against the Claude Code
    subscription, where the count_tokens endpoint is not exposed via the CLI).
 
-The Exam Guide explicitly out-of-scopes tokenization specifics, so the choice
-of algorithm is not graded. What IS graded is that *every* measurement in this
+Tokenization specifics are out of scope, so the choice of algorithm does not
+matter here. What matters is that *every* measurement in this
 project flows through this single function. The active methodology is recorded
 in `runs/<run_id>/budget.json` so the reviewer can interpret the numbers.
 """

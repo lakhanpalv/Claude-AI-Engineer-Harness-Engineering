@@ -1,4 +1,4 @@
-"""Shape tests for the case-facts persistent block (US-03 / LO 5).
+"""Shape tests for the case-facts persistent block.
 
 These exercise the structure of CaseFacts / REQUIRED_FIELDS / to_markdown /
 CaseFactExtractionError without making a Claude call. The live extract() path is

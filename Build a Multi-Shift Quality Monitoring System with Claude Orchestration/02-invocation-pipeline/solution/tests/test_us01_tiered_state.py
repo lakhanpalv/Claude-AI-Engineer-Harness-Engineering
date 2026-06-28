@@ -1,4 +1,4 @@
-"""US-01 — Tiered state foundation. Covers AC-01-01 .. AC-01-04."""
+"""Tests for the tiered state foundation."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from shift_monitor.cold import ColdStore
 from shift_monitor.state import HotState
 from shift_monitor.warm import WarmStore
 
-# ---------- AC-01-01 ----------------------------------------------------------
+# ---------- hot state model ----------
 
 
 def test_hotstate_roundtrip_and_size_budget() -> None:
@@ -52,7 +52,7 @@ def test_hotstate_atomic_write(tmp_path: Path) -> None:
     assert restored == state
 
 
-# ---------- AC-01-02 ----------------------------------------------------------
+# ---------- warm store schema and inserts ----------
 
 
 def test_warmstore_creates_table_and_index(tmp_path: Path) -> None:
@@ -80,7 +80,7 @@ def test_warmstore_insert_many_roundtrips(
     assert fetched["component"] == defect_rows[0]["component"]
 
 
-# ---------- AC-01-03 ----------------------------------------------------------
+# ---------- cold store monthly summaries ----------
 
 
 def test_coldstore_writes_monthly_summary(
@@ -121,7 +121,7 @@ def test_coldstore_handles_empty_month(tmp_path: Path) -> None:
     assert "Total defects: 0" in target.read_text()
 
 
-# ---------- AC-01-04 ----------------------------------------------------------
+# ---------- indexed defects_since query ----------
 
 
 def test_defects_since_uses_index_and_does_not_load_full_table(

@@ -1,6 +1,6 @@
 """The agentic loop.
 
-The defining contract for Module 1:
+The defining contract:
 - Control flow is driven by `response.stop_reason`.
 - Loop continues iff stop_reason == "tool_use".
 - Loop returns iff stop_reason == "end_turn".

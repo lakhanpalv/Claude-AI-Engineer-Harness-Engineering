@@ -1,12 +1,12 @@
-"""US-08 — anti-pattern audit.
+"""Anti-pattern audit.
 
 Four checks:
-  1. pruner.py contains no `anthropic` client import (AC-08.2)
-  2. assemble.py builds sections in the canonical order (AC-08.3)
-  3. assembled `context.md` has the byte-exact active segment (AC-08.4)
+  1. pruner.py contains no `anthropic` client import
+  2. assemble.py builds sections in the canonical order
+  3. assembled `context.md` has the byte-exact active segment
   4. every token measurement in `runs/<run_id>/budget.json` flows through the
      canonical `retail_context.tokens.count` function — verified by static check
-     that no source file in the package imports a competing counter (AC-08.1)
+     that no source file in the package imports a competing counter
 """
 from __future__ import annotations
 
@@ -30,7 +30,7 @@ def _latest_run() -> Path | None:
 
 
 def test_pruner_has_no_anthropic_import():
-    """AC-08.2 — pruner is deterministic, not LLM-driven."""
+    """Pruner is deterministic, not LLM-driven."""
     src = (PKG / "pruner.py").read_text()
     tree = ast.parse(src)
     for node in ast.walk(tree):
@@ -47,7 +47,7 @@ def test_pruner_has_no_anthropic_import():
 
 
 def test_only_tokens_module_uses_count_tokens_or_heuristic():
-    """AC-08.1 — every token measurement flows through retail_context.tokens.count.
+    """Every token measurement flows through retail_context.tokens.count.
 
     Static check: no module in the package other than `tokens.py` references
     `count_tokens` directly or hand-rolls a token estimate (`len(... ) / N` or
@@ -74,7 +74,7 @@ def test_only_tokens_module_uses_count_tokens_or_heuristic():
 
 
 def test_assemble_module_section_order_contract():
-    """AC-08.3 — assemble.py expresses Case Facts → Resolved → Active.
+    """assemble.py expresses Case Facts → Resolved → Active.
 
     The contract is enforced at runtime by `tests/test_assemble.py`, but for
     regression safety this static check confirms the canonical title constants
@@ -88,7 +88,7 @@ def test_assemble_module_section_order_contract():
 
 
 def test_assembled_context_active_segment_byte_exact():
-    """AC-08.4 — verbatim active segment in context.md matches raw turns 29-48."""
+    """Verbatim active segment in context.md matches raw turns 29-48."""
     run = _latest_run()
     if run is None or not (run / "context.md").exists():
         pytest.skip("no run artifacts available — run `python -m retail_context.run --build` first")
@@ -104,8 +104,7 @@ def test_assembled_context_active_segment_byte_exact():
 
 
 def test_budget_json_section_counts_sum_consistently():
-    """AC-08.1 (positive side) — per-section counts must be present and the
-    methodology must be documented."""
+    """Per-section counts must be present and the methodology must be documented."""
     run = _latest_run()
     if run is None or not (run / "budget.json").exists():
         pytest.skip("no run artifacts available — run `python -m retail_context.run --build` first")

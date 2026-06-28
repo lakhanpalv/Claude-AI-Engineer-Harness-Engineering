@@ -1,6 +1,6 @@
 # Exercise 3: Build the Canonical Counter, Compress Resolved Segments, Emit budget.json
 
-**Arc LO C (LO 2 + LO 3 merged).** *Implement the canonical token-counting function that records its methodology, then use it to compress resolved conversation segments into structured ≤500-token summaries with a committed prompt template while preserving the active segment byte-exact, and emit a `budget.json` whose per-section numbers sum to the assembled total.*
+*Implement the canonical token-counting function that records its methodology, then use it to compress resolved conversation segments into structured ≤500-token summaries with a committed prompt template while preserving the active segment byte-exact, and emit a `budget.json` whose per-section numbers sum to the assembled total.*
 
 ---
 
@@ -19,7 +19,7 @@
    - `count(text)`: when `ANTHROPIC_API_KEY` is set, call `get_client().messages.count_tokens(model=get_model(), messages=[...])` and return `int(resp.input_tokens)`. Otherwise fall back to the heuristic.
    - `methodology()`: return the descriptive string for whichever path is active. This string gets written verbatim into `budget.json` so a reviewer can interpret the numbers.
 
-2. **`prompts/compression_prompt.md`** — write the structured prompt. The committed template is part of the rubric (AC-05.3); a reviewer reads this file. The contract: outcome sentence → 3–6 bulleted facts (identifiers and amounts preserved verbatim) → resolution sentence, total ≤500 tokens, no preambles or closing remarks.
+2. **`prompts/compression_prompt.md`** — write the structured prompt. The committed template is reviewed as part of the deliverable; a reviewer reads this file. The contract: outcome sentence → 3–6 bulleted facts (identifiers and amounts preserved verbatim) → resolution sentence, total ≤500 tokens, no preambles or closing remarks.
 
 3. **`compressor.py`**:
    - `summarize_segment(segment, *, model=None)`: refuse anything whose status is not `"resolved"` (raise `ValueError`), then load the prompt and make one `complete_with_system` call. Return a `Summary` carrying the issue_id, the response text, and token counts.
@@ -66,8 +66,8 @@ Each resolved summary should follow the prompt's 3-part structure and clock in u
 ## Where to look if you get stuck
 
 - **Why is the active segment preserved byte-exact?** The whole point of tiered compression is that the *resolution-still-being-negotiated* thread cannot afford fidelity loss — a paraphrased turn might drop the line where the customer named their new card's last-4. The `summarize_segment` guard is the defense against accidentally summarizing the active thread "for consistency."
-- **Why is the prompt graded?** AC-05.3 says the template is committed so reviewers can audit *intent*, not just output. A vague prompt produces grammatical-but-thin summaries that pass the token cap but fail the eval. Structure carries the load.
-- **`per_section_tokens` must sum to `assembled_tokens`.** This is the coherence rule — if the per-section dict and the total disagree, the canonical counter has been bypassed somewhere. AC-08.1 (`test_only_tokens_module_uses_count_tokens_or_heuristic`) catches the most common cause: a competing `len(x) / N` heuristic in another module.
+- **Why does the prompt matter?** The template is committed so reviewers can audit *intent*, not just output. A vague prompt produces grammatical-but-thin summaries that pass the token cap but fail the eval. Structure carries the load.
+- **`per_section_tokens` must sum to `assembled_tokens`.** This is the coherence rule — if the per-section dict and the total disagree, the canonical counter has been bypassed somewhere. The `test_only_tokens_module_uses_count_tokens_or_heuristic` check catches the most common cause: a competing `len(x) / N` heuristic in another module.
 
 ## When you're done
 

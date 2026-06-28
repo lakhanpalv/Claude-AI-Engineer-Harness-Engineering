@@ -77,7 +77,7 @@ def test_ambiguous_fixtures_have_clarification_scripts() -> None:
 
 
 def test_claim_06_is_the_escalation_fixture() -> None:
-    """AC-04.2 references claim_06 by name; lock it in."""
+    """claim_06 is referenced by name; lock it in."""
     fx = json.loads((FIXTURE_DIR / "claim_06_low_confidence_escalation.json").read_text())
     assert fx["expected_outcome"] == "escalated"
     assert fx["clarification_responses"], "claim_06 must provide clarification responses (AC-04.2)"

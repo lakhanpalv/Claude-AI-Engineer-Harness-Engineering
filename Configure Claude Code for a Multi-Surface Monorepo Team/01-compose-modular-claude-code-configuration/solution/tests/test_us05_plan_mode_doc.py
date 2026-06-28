@@ -1,4 +1,4 @@
-"""US-05 — Plan mode vs direct execution decision doc + Explore subagent guidance."""
+"""Tests for the plan mode vs direct execution decision doc + Explore subagent guidance."""
 
 from pathlib import Path
 

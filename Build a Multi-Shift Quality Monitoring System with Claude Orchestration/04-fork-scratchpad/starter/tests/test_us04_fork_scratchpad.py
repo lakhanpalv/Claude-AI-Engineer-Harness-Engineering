@@ -1,4 +1,4 @@
-"""US-04 — Fork session + scratchpad. Covers AC-04-01 .. AC-04-04."""
+"""Tests for fork sessions and the scratchpad."""
 
 from __future__ import annotations
 
@@ -31,7 +31,7 @@ def _entry(hypothesis_id: str, conclusion: str) -> ScratchpadEntry:
     )
 
 
-# ---------- AC-04-01 ----------------------------------------------------------
+# ---------- scratchpad append and read order ----------
 
 
 def test_scratchpad_append_and_read_order(tmp_path: Path) -> None:
@@ -46,7 +46,7 @@ def test_scratchpad_append_and_read_order(tmp_path: Path) -> None:
     assert len(raw_lines) == 3
 
 
-# ---------- AC-04-02 ----------------------------------------------------------
+# ---------- forking state without mutating the base ----------
 
 
 def test_fork_for_hypothesis_copies_state_without_mutating_base(tmp_path: Path) -> None:
@@ -62,7 +62,7 @@ def test_fork_for_hypothesis_copies_state_without_mutating_base(tmp_path: Path) 
     assert base.read_bytes() == base_bytes
 
 
-# ---------- AC-04-03 ----------------------------------------------------------
+# ---------- independent per-fork scratchpads ----------
 
 
 def test_two_forks_produce_independent_scratchpads(tmp_path: Path) -> None:
@@ -95,7 +95,7 @@ def test_two_forks_produce_independent_scratchpads(tmp_path: Path) -> None:
     assert base.read_bytes() == base_bytes_before
 
 
-# ---------- AC-04-04 ----------------------------------------------------------
+# ---------- merging fork findings into main ----------
 
 
 def test_merge_findings_appends_without_rewriting_existing(tmp_path: Path) -> None:

@@ -1,4 +1,4 @@
-"""Position-aware context assembly (US-06).
+"""Position-aware context assembly.
 
 Layout (top → bottom):
   # Case Facts                       — top boundary, structured (≤ 600 tokens)
@@ -9,7 +9,7 @@ Layout (top → bottom):
 This places key findings at both context boundaries (Case Facts at top, the
 active turn-by-turn at bottom against the new user turn) and lets the resolved
 narrative occupy the lower-attention middle. Sections are exclusive — no
-interleaving (AC-06.5).
+interleaving.
 """
 from __future__ import annotations
 
@@ -23,8 +23,8 @@ from retail_context.tokens import count
 # RESOLVED_TITLES maps `issue_id` ("refund", "subscription") to the literal
 # Markdown header string that must appear above that section in the assembled
 # context. ACTIVE_TITLES does the same for the active segment.
-# The AST audit (test_antipatterns.py) regex-matches against these exact strings
-# (AC-06.1 / AC-08.3), so they are part of the contract — change them and the
+# The AST audit (test_antipatterns.py) regex-matches against these exact strings,
+# so they are part of the contract — change them and the
 # audit fails. Use level-1 headings (# ...), not ##.
 RESOLVED_TITLES: dict[str, str] = {}
 ACTIVE_TITLES: dict[str, str] = {}
@@ -36,7 +36,7 @@ class AssembledContext:
     case_facts_block: str
     resolved_blocks: dict[str, str]
     active_block: str
-    active_raw_text: str  # byte-exact verbatim source for AC-06.3 / AC-08.4
+    active_raw_text: str  # byte-exact verbatim source for the active segment
 
     def section_tokens(self) -> dict[str, int]:
         sections = {"case_facts": count(self.case_facts_block)}
@@ -62,14 +62,14 @@ def build(case_facts: CaseFacts, compressed: Compressed) -> AssembledContext:
     #        raise KeyError naming the missing issue.
     #      - render the block as f"{RESOLVED_TITLES[issue_id]}\n\n{summary_text}\n"
     #        where summary_text is the stripped `.text` of the Summary.
-    #    Order matters — refund before subscription — because AC-06.1's regex
+    #    Order matters — refund before subscription — because the regex
     #    audits the exact section sequence.
     #
     # 3. Bottom boundary — the active block (byte-exact).
     #    Look up the active title in ACTIVE_TITLES by compressed.active_issue_id;
     #    if missing, fall back to f"# Active issue: {compressed.active_issue_id}".
     #    The body is `compressed.active_text` unchanged (this is the byte-exact
-    #    contract from AC-06.3 / AC-08.4 — do not strip, re-render, or normalize).
+    #    contract — do not strip, re-render, or normalize).
     #
     # 4. Concatenate top + blank line + refund block + blank line + subscription
     #    block + blank line + active block into the final `markdown` string.

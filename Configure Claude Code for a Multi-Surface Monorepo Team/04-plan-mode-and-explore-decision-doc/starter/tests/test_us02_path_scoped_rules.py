@@ -1,4 +1,4 @@
-"""US-02 — Path-scoped rule files in .claude/rules/ with glob frontmatter."""
+"""Tests for path-scoped rule files in .claude/rules/ with glob frontmatter."""
 
 from pathlib import Path
 

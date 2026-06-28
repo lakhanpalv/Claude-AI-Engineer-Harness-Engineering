@@ -103,7 +103,7 @@ TOOL_SCHEMAS: list[dict[str, Any]] = [
             "required": ["severity", "rationale"],
         },
     },
-    # TODO (Exercise 3): Add three more tool schemas to this list.
+    # TODO: Add three more tool schemas to this list.
     #
     #   - request_clarification(question: str, ambiguity_between: list of >=2 CLAIM_TYPES)
     #     Ask the claimant ONE clarifying question. Returns the scripted claimant reply,
@@ -193,7 +193,7 @@ def _t_assess_severity(session: ClaimSession, inp: dict[str, Any]) -> str:
 
 
 def _t_request_clarification(session: ClaimSession, inp: dict[str, Any]) -> str:
-    # TODO (Exercise 3): Implement the clarification dispatcher.
+    # TODO: Implement the clarification dispatcher.
     #   1. Validate inp["question"] is a string and inp["ambiguity_between"] is a list of
     #      at least 2 entries; otherwise return _err("permanent", False, ...).
     #   2. Record the asked clarification in session.clarifications_asked (so the runner
@@ -206,7 +206,7 @@ def _t_request_clarification(session: ClaimSession, inp: dict[str, Any]) -> str:
 
 
 def _t_route_to_adjuster(session: ClaimSession, inp: dict[str, Any]) -> str:
-    # TODO (Exercise 3): Implement the routing terminal tool.
+    # TODO: Implement the routing terminal tool.
     #   1. Guard against double-terminal: if session.terminal_called, return an error.
     #   2. Validate inp["queue"] is in CLAIM_TYPES and inp["claim_summary"] is a string.
     #   3. Require session.classification and session.severity to be set; otherwise error.
@@ -218,7 +218,7 @@ def _t_route_to_adjuster(session: ClaimSession, inp: dict[str, Any]) -> str:
 
 
 def _t_escalate_to_human(session: ClaimSession, inp: dict[str, Any]) -> str:
-    # TODO (Exercise 3): Implement the escalation terminal tool.
+    # TODO: Implement the escalation terminal tool.
     #   1. Guard against double-terminal: if session.terminal_called, return an error.
     #   2. Validate inp["reason"] is a string and inp["structured_summary"] is a dict
     #      containing all required keys: policy_id, root_cause, candidate_claim_types,

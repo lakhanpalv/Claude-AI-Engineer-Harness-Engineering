@@ -3,14 +3,14 @@
 Two inference paths are supported:
 
 1. **SDK path (preferred / exemplar)** — used when `ANTHROPIC_API_KEY` is set.
-   Direct Anthropic Python SDK calls. This is what learners use in the Docker
+   Direct Anthropic Python SDK calls. This is what you use in the Docker
    container with the project's $25 API credit.
 
 2. **Claude Code CLI path (fallback)** — used when no API key is set but the
    `claude` CLI is available and authenticated. Shells out to
    `claude -p --output-format json --model <model>`. This is purely a
    convenience for local development against an existing Claude Code session
-   subscription — it does not represent the canonical learner workflow.
+   subscription — it does not represent the canonical workflow.
 
 `CLAUDE_MODEL` env var overrides the default model in either path.
 """

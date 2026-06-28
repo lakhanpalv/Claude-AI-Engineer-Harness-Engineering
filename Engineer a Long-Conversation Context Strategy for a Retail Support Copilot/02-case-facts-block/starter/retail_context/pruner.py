@@ -1,6 +1,6 @@
-"""Deterministic tool-output pruning for the verbose `lookup_order` response (US-04).
+"""Deterministic tool-output pruning for the verbose `lookup_order` response.
 
-The Architect's Playbook "Tool Context Pruning" pattern: application-side filtering
+The "Tool Context Pruning" pattern: application-side filtering
 of a verbose tool result so only the fields needed for the immediate decision survive
 into context. For return/refund reasoning, exactly five fields matter — order identity,
 when it was placed, what it cost, whether it shipped, and the return-window deadline.
@@ -21,7 +21,7 @@ Why each kept field is the only one that matters for return/refund reasoning:
                               response.
 
 Implementation: deterministic field selection (no LLM call). The pruner has no
-`anthropic` import — enforced by AC-08.2's AST audit.
+`anthropic` import — enforced by an AST audit.
 """
 from __future__ import annotations
 

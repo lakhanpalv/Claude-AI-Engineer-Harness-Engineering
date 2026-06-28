@@ -1,6 +1,6 @@
 # Exercise 2: Extract Case Facts into a Persistent Block
 
-**Arc LO B (LO 5 from spec).** *Extract transactional case facts from a long transcript into a persistent 12-field Markdown block that survives compression, using an LLM call with a strict schema and a no-silent-fill failure mode.*
+*Extract transactional case facts from a long transcript into a persistent 12-field Markdown block that survives compression, using an LLM call with a strict schema and a no-silent-fill failure mode.*
 
 ---
 
@@ -8,7 +8,7 @@
 
 `starter/` is byte-identical to Exercise 1's `solution/` — your pruner is already in place. New for Exercise 2:
 
-- `retail_context/case_facts.py` is now the active learner-write surface (four TODO blocks).
+- `retail_context/case_facts.py` is now the active file you implement (four TODO blocks).
 - `tests/test_case_facts.py` runs against the shape of `REQUIRED_FIELDS`, the `CaseFacts` dataclass, the `to_markdown()` rendering, and the `CaseFactExtractionError` contract — none of these tests make a Claude call.
 - `data/transcript_48turns.json` is the same 48-turn fixture the rest of the pipeline will consume.
 

@@ -1,11 +1,11 @@
 <!-- TODO (Exercise 3): Replace this file with the compression prompt.
 
 This file is the system message for the per-resolved-segment Claude call in
-`compressor.summarize_segment`. It is committed as a *template* (AC-05.3) so the
+`compressor.summarize_segment`. It is committed as a *template* so the
 intent is auditable: a reviewer reads this file to decide whether following it
 would reliably produce the required structure.
 
-Required structure of the model's output (AC-05.2):
+Required structure of the model's output:
 
   1. ONE sentence naming what was resolved (past-tense outcome).
   2. 3-6 bullet facts: amounts, IDs, statuses, dates — preserved verbatim.

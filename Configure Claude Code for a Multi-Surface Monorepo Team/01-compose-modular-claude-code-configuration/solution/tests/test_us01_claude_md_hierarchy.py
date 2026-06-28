@@ -1,4 +1,4 @@
-"""US-01 — CLAUDE.md hierarchy with @import and modular standards."""
+"""Tests for the CLAUDE.md hierarchy with @import and modular standards."""
 
 from pathlib import Path
 

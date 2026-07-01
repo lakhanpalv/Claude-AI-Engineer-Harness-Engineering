@@ -63,7 +63,7 @@ def _check_claude_md(repo_root: Path) -> list[str]:
     out: list[str] = []
     dangling = unresolved_imports(claude_md, repo_root=repo_root)
     if dangling:
-        out.append(f"CLAUDE.md has dangling @import targets: {dangling}")
+        out.append(f"CLAUDE.md has dangling @-import targets: {dangling}")
     scope = distinguishes_project_vs_user_scope(claude_md)
     if not all((scope.mentions_user_level, scope.mentions_project_level,
                 scope.states_not_version_controlled, scope.user_scope_example)):

@@ -34,9 +34,12 @@ def test_transcript_loader_partition_boundaries(t):
 
 
 def test_transcript_loader_token_count_in_engineered_range(t):
-    # baseline must lie in [42000, 52000]
-    assert 42000 <= t.token_count <= 52000, (
-        f"baseline token_count {t.token_count} outside engineered range [42000, 52000]"
+    # Baseline is a large conversation that must be reduced by >=50%. The exact
+    # count varies by tokenizer/model (heuristic ~47k; API haiku/sonnet ~38.7k;
+    # API opus ~52.3k), so this window is deliberately wide.
+    assert 35000 <= t.token_count <= 55000, (
+        f"baseline token_count {t.token_count} outside expected range "
+        f"[35000, 55000] (varies by tokenizer/model)"
     )
 
 

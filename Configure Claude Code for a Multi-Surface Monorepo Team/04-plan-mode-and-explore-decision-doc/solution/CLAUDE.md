@@ -14,14 +14,14 @@ Claude Code resolves configuration in a hierarchy:
 
 If something would only matter to you — your preferred commit-message style, your editor-specific snippets, a personal `/morning` summary command — put it under `~/.claude/`. Anything the whole team should agree on goes here in `./CLAUDE.md` or under `.claude/standards/`.
 
-## Shared standards (modular via @import)
+## Shared standards (modular via @-imports)
 
 The actual conventions live in focused files so this entry point stays scannable:
 
-- @import .claude/standards/frontend.md
-- @import .claude/standards/api.md
-- @import .claude/standards/database.md
-- @import .claude/standards/testing.md
+- @.claude/standards/frontend.md
+- @.claude/standards/api.md
+- @.claude/standards/database.md
+- @.claude/standards/testing.md
 
 Path-scoped rules in [.claude/rules/](.claude/rules/) layer on top of these standards and activate only when Claude is editing matching files (React components, API handlers, test files).
 

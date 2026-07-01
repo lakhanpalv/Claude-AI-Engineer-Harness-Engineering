@@ -25,7 +25,7 @@ from typing import Literal
 
 import anthropic
 
-DEFAULT_MODEL = "claude-haiku-4-5"
+DEFAULT_MODEL = "claude-haiku-4-5-20251001"
 InferenceBackend = Literal["sdk", "cli"]
 
 

@@ -36,7 +36,7 @@ Engineer a Layer 3 orchestration system that runs once per 8-hour shift: tiered 
 
 Configure Claude Code for a team working in a multi-surface monorepo: modular `CLAUDE.md` and path-scoped rules, a project-scoped review command, a forked deploy-check skill, and a plan-mode/explore decision doc.
 
-- `01-compose-modular-claude-code-configuration/` — Modular `CLAUDE.md` `@import`s and path-scoped `.claude/rules/*.md`.
+- `01-compose-modular-claude-code-configuration/` — Modular `CLAUDE.md` `@`-imports and path-scoped `.claude/rules/*.md`.
 - `02-author-project-scoped-review-command/` — A project-scoped `/review` command.
 - `03-author-forked-deploy-check-skill/` — A forked `deploy-check` skill.
 - `04-plan-mode-and-explore-decision-doc/` — Plan mode vs. Explore decision doc.
@@ -61,7 +61,7 @@ Project-specific notes:
 
 ## Running an exercise
 
-Each exercise's `README.md` is authoritative, but the Python projects follow the same shape — create a virtual environment, install in editable mode with dev extras, then run the scoped verify command:
+Each exercise's `README.md` is authoritative, but the Python projects follow the same steps — create a virtual environment, install in editable mode with dev extras, then run the scoped verify command:
 
 ```bash
 cd "<project>/<exercise>/starter"
@@ -71,6 +71,8 @@ pytest -q   # or the scoped verify command named in the exercise README
 ```
 
 Expect the starter suite to fail until the `TODO` blocks are resolved; the exercise is complete when the verify command passes cleanly.
+
+**Run the scoped verify command, not a bare `pytest`.** The Claims Intake, Long-Conversation Context, and Monorepo Team projects are *cumulative* — each exercise ships the full project test suite, so tests for later, not-yet-built steps are present from exercise 1. A bare `pytest` (even in a correct intermediate `solution/`) will show those later tests as expected reds. Each exercise README names the exact subset that should pass at that step; only the final exercise of a project goes fully green on a bare `pytest`. (The Multi-Shift project is the exception — each stage is self-contained and passes on its own.)
 
 ## License
 

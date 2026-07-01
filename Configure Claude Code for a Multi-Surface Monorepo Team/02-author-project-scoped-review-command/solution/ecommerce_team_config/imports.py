@@ -1,11 +1,11 @@
-"""Parse and resolve @import directives in CLAUDE.md files."""
+"""Parse and resolve @path import directives in CLAUDE.md files."""
 
 from __future__ import annotations
 
 import re
 from pathlib import Path
 
-_IMPORT_RE = re.compile(r"@import\s+([^\s)]+)")
+_IMPORT_RE = re.compile(r"@([\w./-]+\.\w+)")
 
 
 def find_imports(claude_md: Path) -> list[str]:

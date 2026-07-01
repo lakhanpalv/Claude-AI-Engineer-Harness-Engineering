@@ -14,23 +14,23 @@ TODO: Add a side-by-side table distinguishing project-level (`./CLAUDE.md`, `.cl
 
 <!-- TODO: Add a short paragraph tying the table back to the team's intent. -->
 
-## Shared standards (modular via @import)
+## Shared standards (modular via @-imports)
 
 The actual conventions live in focused files so this entry point stays scannable:
 
 <!--
-TODO: Use `@import` to pull in each standards file from .claude/standards/.
+TODO: Use an `@`-import (a bare `@` followed immediately by the path) to pull in each standards file from .claude/standards/.
 
-The `@import` directive is a BARE LINE on its own — e.g.
+The `@`-import directive is a BARE LINE on its own — an `@` immediately followed by the path, with no `import` keyword — e.g.
 
-    @import .claude/standards/frontend.md
+    @.claude/standards/frontend.md
 
 It is NOT Markdown link syntax like `[name](path)`. That is a common first-attempt
 mistake — Markdown links render but they do not actually import the file's contents
 into the session.
 
 Four standards files already exist for you under `.claude/standards/`:
-frontend.md, api.md, database.md, testing.md. Add one `@import` line for each.
+frontend.md, api.md, database.md, testing.md. Add one `@`-import line for each.
 -->
 
 Path-scoped rules in [.claude/rules/](.claude/rules/) layer on top of these standards and activate only when Claude is editing matching files (React components, API handlers, test files).

@@ -1,4 +1,4 @@
-"""Tests for the CLAUDE.md hierarchy with @import and modular standards."""
+"""Tests for the CLAUDE.md hierarchy with @-import and modular standards."""
 
 from pathlib import Path
 
@@ -10,20 +10,20 @@ from ecommerce_team_config.imports import find_imports, unresolved_imports
 
 
 def test_ac_01_01_root_claude_md_has_at_least_one_import(repo_root: Path) -> None:
-    """Root CLAUDE.md contains ≥1 @import referencing a file under .claude/standards/."""
+    """Root CLAUDE.md contains ≥1 @-import referencing a file under .claude/standards/."""
     claude_md = repo_root / "CLAUDE.md"
     assert claude_md.exists(), "CLAUDE.md must exist at repo root"
 
     imports = find_imports(claude_md)
     standards_imports = [p for p in imports if ".claude/standards/" in p]
     assert standards_imports, (
-        f"Expected at least one @import under .claude/standards/, got {imports!r}"
+        f"Expected at least one @-import under .claude/standards/, got {imports!r}"
     )
 
 
 def test_ac_01_02_two_standards_files_each_imported(repo_root: Path) -> None:
     """≥2 standards files under .claude/standards/, one frontend-relevant and one
-    API-relevant, each referenced by an @import from root CLAUDE.md."""
+    API-relevant, each referenced by an @-import from root CLAUDE.md."""
     standards_dir = repo_root / ".claude" / "standards"
     standards_files = list(standards_dir.glob("*.md"))
     assert len(standards_files) >= 2, (
@@ -34,7 +34,7 @@ def test_ac_01_02_two_standards_files_each_imported(repo_root: Path) -> None:
     imported_names = {Path(p).name for p in imports}
     standards_names = {f.name for f in standards_files}
     assert standards_names.issubset(imported_names), (
-        f"All standards files must be @imported. Missing: {standards_names - imported_names}"
+        f"All standards files must be @-imported. Missing: {standards_names - imported_names}"
     )
 
     has_frontend = any(
@@ -48,9 +48,9 @@ def test_ac_01_02_two_standards_files_each_imported(repo_root: Path) -> None:
 
 
 def test_ac_01_03_no_dangling_imports(repo_root: Path) -> None:
-    """Every @import path resolves to an existing file."""
+    """Every @-import path resolves to an existing file."""
     unresolved = unresolved_imports(repo_root / "CLAUDE.md", repo_root=repo_root)
-    assert not unresolved, f"Dangling @import targets: {unresolved}"
+    assert not unresolved, f"Dangling @-import targets: {unresolved}"
 
 
 def test_ac_01_04_claude_md_under_200_lines(repo_root: Path) -> None:

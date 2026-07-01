@@ -43,7 +43,7 @@ module-05-capstone-harness-engineering/   ← you are here
 ## Prerequisites
 
 - **Python 3.11+**
-- **An Anthropic API key** exported as `ANTHROPIC_API_KEY`. Systems 1, 2, and 4 call the real Claude API. System 3's validator does not require the API.
+- **A Claude API key** exported as `ANTHROPIC_API_KEY`. Systems 1, 2, and 4 call the real Claude API. System 3's validator does not require the API.
   > ⚠️ Running all four systems against the live API costs roughly **$1–$5 total** on the default Haiku/Sonnet models. System 4 can be run fully offline with `--recorded-response` if you want to avoid any spend on that one.
 - **git** and a terminal (macOS, Linux, or WSL on Windows).
 
@@ -114,7 +114,7 @@ cd "$SYSTEMS/Build a Multi-Shift Quality Monitoring System with Claude Orchestra
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 
-pytest tests/ -v                       # expect 28 passed
+pytest tests/ -v                       # expect 33 passed
 
 # seed the warm tier once
 python -c "import json; from pathlib import Path; from shift_monitor.warm import WarmStore; \

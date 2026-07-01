@@ -1,6 +1,6 @@
 # Exercise 1 — Build the Agentic Loop
 
-> Picking up from the bootstrap scaffold: the project skeleton is in place — Anthropic client factory, `Budget`, `Tracer`, `ClaimSession` dataclass, package layout, tests. Your job in this exercise is the single function that drives every later turn the agent ever takes: the agentic loop.
+> Picking up from the bootstrap scaffold: the project skeleton is in place — Claude API client factory, `Budget`, `Tracer`, `ClaimSession` dataclass, package layout, tests. Your job in this exercise is the single function that drives every later turn the agent ever takes: the agentic loop.
 
 ## What You're Learning Here
 
@@ -58,6 +58,8 @@ pytest tests/test_loop.py -v
 ```
 
 All 5 tests should pass. They use a scripted `FakeMessages` client, so this runs offline and costs nothing.
+
+> Run `pytest tests/test_loop.py`, not a bare `pytest`. This project is cumulative — `tests/test_tools.py` and `tests/test_fixtures.py` are already present but belong to Exercises 2 and 3, so a bare `pytest` will show them as expected reds until you get there.
 
 ### Troubleshooting
 

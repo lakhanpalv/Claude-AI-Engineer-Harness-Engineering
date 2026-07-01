@@ -5,7 +5,7 @@
 A working Claude Code configuration foundation for the team's monorepo: a project-level `CLAUDE.md` that imports shared standards modularly, plus path-scoped `.claude/rules/*.md` files that load conventions per file Claude is editing.
 
 By the end of this exercise:
-- `CLAUDE.md` carries an `@import` block, a scope-distinction table (project / user / directory), and a `/memory` troubleshooting one-liner.
+- `CLAUDE.md` carries an `@-import` block, a scope-distinction table (project / user / directory), and a `/memory` troubleshooting one-liner.
 - `.claude/rules/api.md` and `.claude/rules/tests.md` declare YAML frontmatter with `paths:` globs that activate the right conventions for API handler files and test files. (`.claude/rules/react.md` is provided as the worked example.)
 
 ## What's already provided
@@ -13,7 +13,7 @@ By the end of this exercise:
 The `starter/` directory contains:
 
 - The full Python validator package (`ecommerce_team_config/`), test suite (`tests/`), and React/Node/Postgres scaffold under `src/`. You consume the validator as a black-box checker — you do not modify it.
-- The four `.claude/standards/*.md` files (`frontend.md`, `api.md`, `database.md`, `testing.md`) already complete. These are the always-loaded shared standards your `@import` block will pull in.
+- The four `.claude/standards/*.md` files (`frontend.md`, `api.md`, `database.md`, `testing.md`) already complete. These are the always-loaded shared standards your `@-import` block will pull in.
 - `.claude/rules/react.md` already complete, as a worked example of the path-scoped rule pattern (YAML frontmatter with `paths:` globs + body conventions).
 - A starter `CLAUDE.md` and stub `.claude/rules/api.md` + `.claude/rules/tests.md` with `# TODO:` comments marking each location you implement.
 

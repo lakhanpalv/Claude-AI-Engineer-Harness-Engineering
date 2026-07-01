@@ -115,7 +115,7 @@ module-02-retail-context-strategy/
 ├── retail_context/
 │   ├── __init__.py
 │   ├── __main__.py
-│   ├── client.py               # Anthropic SDK + Claude Code CLI fallback
+│   ├── client.py               # Claude API + Claude Code CLI fallback
 │   ├── tokens.py               # canonical token-count function
 │   ├── transcript.py           # loader + segmentation
 │   ├── case_facts.py           # extraction into persistent block
